@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./_components/Navbar";
 import Footer from "./_components/Footer";
 import { cn } from "@/lib/utils";
+import QueryProvider from "./_components/QueryProvider";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -27,7 +28,9 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col pt-20">
         <Navbar />
         <main className="container mx-auto px-4 grow">
-          {children}
+          <QueryProvider >
+            {children}
+          </QueryProvider>
         </main>
         <Footer />
       </body>

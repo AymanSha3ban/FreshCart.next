@@ -26,8 +26,8 @@ export default function RegisterForm() {
     resolver: zodResolver(registerSchema),
   });
 
-  function onSubmit(values: RegisterFormData) {
-    console.log("Registration data:", values);
+  function onSubmit(formData: RegisterFormData) {
+    console.log("Registration data:", formData);
   }
 
   return (
