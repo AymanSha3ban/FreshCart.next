@@ -7,8 +7,11 @@ import { IProduct } from "../_interfaces/products.interface";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Star, ShoppingCart } from "lucide-react";
+import { MutatingDots } from "react-loader-spinner";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter()
   const { data, isLoading, isError, error } = useQuery<IProduct[]>({
     queryKey: ["products"],
     queryFn: getProducts,
@@ -16,10 +19,18 @@ export default function Page() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[50vh]">
-        <div className="animate-pulse text-lg font-medium text-muted-foreground">
-          جاري تحميل المنتجات...
-        </div>
+      <div className="flex justify-center items- h-[90%] ">
+        <MutatingDots
+            visible={true}
+            height="100"
+            width="100"
+            color="#4fa94d"
+            secondaryColor="#4fa94d"
+            radius="12.5"
+            ariaLabel="mutating-dots-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+        />
       </div>
     );
   }
@@ -28,7 +39,7 @@ export default function Page() {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="text-center p-6 border border-red-200 rounded-lg bg-red-50 text-red-600">
-          حدث خطأ: {(error as Error).message}
+          Error : {(error as Error).message}
         </div>
       </div>
     );
@@ -40,6 +51,7 @@ export default function Page() {
         {data?.map((prod: IProduct) => (
           <Card
             key={prod._id}
+            onClick={()=>router.push(`products/${prod._id}`)}
             className="group overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all duration-300 border-border/60"
           >
             <div>
